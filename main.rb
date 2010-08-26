@@ -6,7 +6,6 @@ require 'vip'
 
 get '/:date' do |date|
   today = Vip.new(date)
-  #today = Vip.new('2010-06-03')
   
   @number_of_divisions = today.div_count
   erb :index
@@ -14,7 +13,6 @@ end
 
 get '/:date/:division' do |date, division|
   today = Vip.new(date)
-  #today = Vip.new('2010-06-03')
   
   @division = division
   @date = date
