@@ -19,8 +19,8 @@ class Vip
   # Show me the OA URL for a debate
   def get_gid(vote)
     gid = (@doc/:division)["#{vote}".to_i]
-    # we need to minus one off the second to last bit of the id
-    # so we do a fucked up nasty hack
+    # FIXME: The below tries to derive the correct GID for the speech the
+    # division is referring to but it doesn't seem to work well
     gid = gid.attributes['id'][25..-1].split('.')
     gid[1] = gid[1].to_i+1
     gid = "http://www.openaustralia.org/debate/?id=" + gid[0] + "." + gid[1].to_s + "." + gid[2]
