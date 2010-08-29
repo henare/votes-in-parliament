@@ -4,14 +4,10 @@ require 'rubygems'
 require 'sinatra'
 require 'vip'
 
-# Set to true for application debugging (i.e. local files, rather than remote)
-@debug = true
-
 get '/' do
   @dates = get_debate_list
   erb :index
 end
-
 
 get '/:date' do |@date|
   today = Vip.new(@date)
