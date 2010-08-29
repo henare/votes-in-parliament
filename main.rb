@@ -13,6 +13,12 @@ get '/:date' do |@date|
   today = Vip.new(@date)
   @number_of_divisions = today.div_count
 
+  @divisions = Array.new
+  for i in (1..@number_of_divisions)
+    i = i.to_s
+    @divisions << '<li><a href="' + @date + '/' + i + '">' + i + '</a></li>'
+  end
+
   erb :day
 end
 

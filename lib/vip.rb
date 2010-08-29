@@ -32,7 +32,8 @@ class Vip
 
   # Show me the OA URL for a debate
   def get_gid(vote)
-    gid = (@doc/:division)["#{vote}".to_i]
+    vote = vote.to_i - 1
+    gid = (@doc/:division)[vote]
     # FIXME: The below tries to derive the correct GID for the speech the
     # division is referring to but it doesn't seem to work well
     gid = gid.attributes['id'][25..-1].split('.')
@@ -43,9 +44,10 @@ class Vip
   # Gets all the voters for a division, returns a two arrays in a hash
   # of names of ayes and noes
   def get_voters(vote)
+    vote = vote.to_i - 1
     aye = Array.new
     no = Array.new
-    division = (@doc/:division)["#{vote}".to_i]
+    division = (@doc/:division)[vote]
     (division/:memberlist).each do |l|
       (l/:member).each do |m|
         if m.attributes['vote'] == "aye"
