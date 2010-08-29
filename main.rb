@@ -16,7 +16,7 @@ get '/:date' do |@date|
   @divisions = Array.new
   for i in (1..@number_of_divisions)
     i = i.to_s
-    @divisions << '<li><a href="' + @date + '/' + i + '">' + i + '</a></li>'
+    @divisions << '<li><a href="' + @date + '/' + i + '">' + today.get_division_time(i) + '</a></li>'
   end
 
   erb :day

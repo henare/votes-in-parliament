@@ -41,6 +41,10 @@ class Vip
     gid = "http://www.openaustralia.org/debate/?id=" + gid[0] + "." + gid[1].to_s + "." + gid[2]
   end
 
+  def get_division_time(vote)
+    time = (@doc/:division)[vote.to_i - 1].attributes['time']
+  end
+
   # Gets all the voters for a division, returns a two arrays in a hash
   # of names of ayes and noes
   def get_voters(vote)
