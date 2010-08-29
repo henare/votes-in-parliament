@@ -4,18 +4,26 @@ require 'rubygems'
 require 'sinatra'
 require 'vip'
 
-get '/:date' do |date|
-  today = Vip.new(date)
+# Set to true for application debugging (i.e. local files, rather than remote)
+@debug = true
 
-  @number_of_divisions = today.div_count
+get '/' do
+  @dates = get_debate_list
   erb :index
 end
 
-get '/:date/:division' do |date, division|
-  today = Vip.new(date)
+
+get '/:date' do |@date|
+  today = Vip.new(@date)
+  @number_of_divisions = today.div_count
+
+  erb :day
+end
+
+get '/:date/:division' do |@date, division|
+  today = Vip.new(@date)
 
   @division = division
-  @date = date
   @url = today.get_gid(division)
 
   @ayes = Array.new

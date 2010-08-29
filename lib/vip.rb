@@ -2,13 +2,27 @@ require 'rubygems'
 require 'hpricot'
 require 'open-uri'
 
+if @debug
+  @url = "./"
+else
+  @url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
+end
+
+# FIXME: Not working yet
+def get_debate_list
+  doc = Hpricot.parse(open(@url))
+  dates = Array.new
+  doc.search("a").each do |a|
+    if a.inner_text[-3..-1] == "xml"
+      a.inner_text
+    end
+  end
+end
+
 class Vip
 
   def initialize(date)
-    # For testing:
-    #url = "./"
-    url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
-    @doc = Hpricot.parse(open("#{url}#{date}.xml"))
+    @doc = Hpricot.parse(open("#{@url}#{date}.xml"))
   end
 
   # How many divisions today?
