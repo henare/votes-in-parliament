@@ -31,18 +31,21 @@ class Vip
   end
 
   # Show me the OA URL for a debate
-  def get_gid(vote)
+  def get_url(vote)
     vote = vote.to_i - 1
-    gid = (@doc/:division)[vote]
-    # FIXME: The below tries to derive the correct GID for the speech the
-    # division is referring to but it doesn't seem to work well
-    gid = gid.attributes['id'][25..-1].split('.')
-    gid[1] = gid[1].to_i+1
-    gid = "http://www.openaustralia.org/debate/?id=" + gid[0] + "." + gid[1].to_s + "." + gid[2]
+    gid = (@doc/:division)[vote].previous.previous.attributes['id'][25..-1]
+    gid = "http://www.openaustralia.org/debate/?id=" + gid
   end
 
+  # What time did a division happen?
   def get_division_time(vote)
     time = (@doc/:division)[vote.to_i - 1].attributes['time']
+  end
+
+  # Get the debate text immedately prior to the division
+  def get_vote_question(vote)
+    vote = vote.to_i - 1
+    (@doc/:division)[vote].previous.previous.inner_text
   end
 
   # Gets all the voters for a division, returns a two arrays in a hash

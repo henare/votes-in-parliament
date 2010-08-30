@@ -16,7 +16,8 @@ get '/:date' do |@date|
   @divisions = Array.new
   for i in (1..@number_of_divisions)
     i = i.to_s
-    @divisions << '<li><a href="' + @date + '/' + i + '">' + today.get_division_time(i) + '</a></li>'
+    @divisions << '<li><a href="' + @date + '/' + i + '">' + today.get_division_time(i) + '</a> - ' +
+      '<a href="' + today.get_url(i) + '">' + today.get_vote_question(i) + '</a></li>'
   end
 
   erb :day
@@ -26,7 +27,7 @@ get '/:date/:division' do |@date, division|
   today = Vip.new(@date)
 
   @division = division
-  @url = today.get_gid(division)
+  @url = today.get_url(division)
   @time = today.get_division_time(division)
 
   @ayes = Array.new
