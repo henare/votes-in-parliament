@@ -21,7 +21,7 @@ get '/:date' do |@date|
   for i in (1..@number_of_divisions)
     i = i.to_s
     @divisions << '<li><a href="' + @date + '/' + i + '">' + today.get_division_time(i) + '</a> - ' +
-      '<a href="' + today.get_url(i) + '">' + today.get_vote_question(i) + '</a></li>'
+      '<a href="' + today.get_url(i) + '">Division question:</a> ' + today.get_vote_question(i) + '</li>'
   end
 
   erb :day
