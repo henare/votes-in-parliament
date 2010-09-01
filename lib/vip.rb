@@ -3,14 +3,19 @@ require 'hpricot'
 require 'open-uri'
 
 def get_debate_list
-  # For testing:
-  #url = "./Index\ of\ _scrapedxml_representatives_debates.html"
-  url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
-  doc = Hpricot.parse(open(url))
+  # TODO: Sort the list
   dates = Array.new
-  doc.search("a").each do |a|
-    if a.inner_text[-3..-1] == "xml"
-      dates << '<li><a href="/' + a.inner_text[0..9] + '">' + a.inner_text[0..9] + '</a></li>'
+  if LOCAL_STORAGE
+    Dir['data/*.xml'].each do |f|
+      dates << '<li><a href="/' + f[5..14] + '">' + f[5..14] + '</a></li>'
+    end
+  else
+    url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
+    doc = Hpricot.parse(open(url))
+    doc.search("a").each do |a|
+      if a.inner_text[-3..-1] == "xml"
+        dates << '<li><a href="/' + a.inner_text[0..9] + '">' + a.inner_text[0..9] + '</a></li>'
+      end
     end
   end
   dates
@@ -19,10 +24,12 @@ end
 class Vip
 
   def initialize(date)
-    # For testing:
-    #url = "./"
-    url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
-    @doc = Hpricot.parse(open("#{url}#{date}.xml"))
+    if LOCAL_STORAGE
+      @doc = Hpricot.parse(open("data/#{date}.xml"))
+    else
+      url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
+      @doc = Hpricot.parse(open("#{url}#{date}.xml"))
+    end
   end
 
   # How many divisions today?
