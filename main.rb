@@ -6,7 +6,7 @@ require 'vip'
 
 # Set to true to get the XML files from the 'data'directory
 # and not dynamically from data.openaustralia.org
-LOCAL_STORAGE = true
+LOCAL_STORAGE = false
 
 get '/' do
   @dates = get_debate_list
