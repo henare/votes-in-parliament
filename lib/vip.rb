@@ -7,14 +7,14 @@ def get_debate_list
   dates = Array.new
   if LOCAL_STORAGE
     Dir['data/*.xml'].each do |f|
-      dates << '<li><a href="/' + f[5..14] + '">' + f[5..14] + '</a></li>'
+      dates << '<li><a href="/' + f[5..14] + '">' + f[5..14] + "</a></li>\n"
     end
   else
     url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
     doc = Hpricot.parse(open(url))
     doc.search("a").each do |a|
       if a.inner_text[-3..-1] == "xml"
-        dates << '<li><a href="/' + a.inner_text[0..9] + '">' + a.inner_text[0..9] + '</a></li>'
+        dates << '<li><a href="/' + a.inner_text[0..9] + '">' + a.inner_text[0..9] + "</a></li>\n"
       end
     end
   end
