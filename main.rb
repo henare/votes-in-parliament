@@ -21,8 +21,11 @@ get '/:date' do |@date|
   @divisions = Array.new
   for i in (1..@number_of_divisions)
     i = i.to_s
-    @divisions << '<li><a href="' + @date + '/' + i + '">' + today.get_division_time(i) + '</a> - ' +
-      '<a href="' + today.get_url(i) + '">Division question:</a> ' + today.get_vote_question(i) + '</li>'
+    @divisions << { :date => @date,
+                    :time => today.get_division_time(i),
+                    :division => i,
+                    :url => today.get_url(i),
+                    :question => today.get_vote_question(i) }
   end
 
   haml :day
@@ -37,12 +40,12 @@ get '/:date/:division' do |@date, division|
 
   @ayes = Array.new
   today.get_voters(division)['ayes'].each do |v|
-    @ayes << "<li>" + v + "</li>\n"
+    @ayes << v
   end
 
   @noes = Array.new
   today.get_voters(division)['noes'].each do |v|
-    @noes << "<li>" + v + "</li>\n"
+    @noes << v
   end
 
   haml :votes

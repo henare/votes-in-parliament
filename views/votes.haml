@@ -6,8 +6,10 @@
 
 %p Ayes: #{@ayes.count}
 %ul
-  = @ayes
+  - @ayes.each do |a|
+    %li= a
 
 %p Noes: #{@noes.count}
 %ul
-  = @noes
+  - @noes.each do |n|
+    %li= n
