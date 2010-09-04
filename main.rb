@@ -37,6 +37,7 @@ get '/:date/:division' do |@date, division|
   @division = division
   @url = today.get_url(division)
   @time = today.get_division_time(division)
+  @page_title = "Votes for division number #{@division}, held at #{@time} for day #{@date}"
 
   @ayes = Array.new
   today.get_voters(division)['ayes'].each do |v|

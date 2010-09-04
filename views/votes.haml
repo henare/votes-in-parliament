@@ -3,7 +3,7 @@
 %p Go back to #{link_to("today's list of divsions", "/#{@date}")}.
 
 %img{:src => "http://chart.apis.google.com/chart?cht=bhg&chs=250x90&chd=t:#{@noes.count},#{@ayes.count}&chxt=x,y&chxl=1:|Ayes|Noes",
-     :alt => "Graph of votes"}
+     :alt => "Bar chart of votes"}
 
 %p Ayes: #{@ayes.count}
 %ul
