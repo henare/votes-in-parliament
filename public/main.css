@@ -1,1 +1,17 @@
-body { font-family: 'Old Standard TT', arial, serif; }
+body {
+  font-family: 'Old Standard TT', arial, serif;
+  margin: 0;
+  padding: 0;
+}
+#content {
+  width: 75%;
+  margin: 0 auto;
+}
+#ayes {
+  float: left;
+  width: 50%;
+}
+#noes {
+  float: right;
+  width: 50%;
+}

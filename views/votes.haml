@@ -1,16 +1,18 @@
-%p The following are the votes for #{link_to("division number #{@division}", @url)}, held at #{@time} for day #{@date}.
+#header
+  %p The following are the votes for #{link_to("division number #{@division}", @url)}, held at #{@time} for day #{@date}.
 
-%p Go back to #{link_to("today's list of divsions", "/#{@date}")}.
+  %p Go back to #{link_to("today's list of divsions", "/#{@date}")}.
 
-%img{:src => "http://chart.apis.google.com/chart?cht=bhg&chs=250x90&chd=t:#{@noes.count},#{@ayes.count}&chxt=x,y&chxl=1:|Ayes|Noes",
-     :alt => "Bar chart of votes"}
+  %img{:src => "http://chart.apis.google.com/chart?cht=bhg&chs=250x90&chd=t:#{@noes.count},#{@ayes.count}&chxt=x,y&chxl=1:|Ayes|Noes",
+       :alt => "Bar chart of votes"}
+#ayes
+  %p Ayes: #{@ayes.count}
+  %ul
+    - @ayes.each do |a|
+      %li= a
 
-%p Ayes: #{@ayes.count}
-%ul
-  - @ayes.each do |a|
-    %li= a
-
-%p Noes: #{@noes.count}
-%ul
-  - @noes.each do |n|
-    %li= n
+#noes
+  %p Noes: #{@noes.count}
+  %ul
+    - @noes.each do |n|
+      %li= n
