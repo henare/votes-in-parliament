@@ -14,7 +14,7 @@ get '/' do
   haml :index
 end
 
-get '/:date' do |@date|
+get '/:date/?' do |@date|
   today = Vip.new(@date)
   @number_of_divisions = today.div_count
   @page_title = "Division summary for #{@date}"
@@ -31,7 +31,7 @@ get '/:date' do |@date|
   haml :day
 end
 
-get '/:date/:division' do |@date, division|
+get '/:date/:division/?' do |@date, division|
   today = Vip.new(@date)
 
   @division = division
