@@ -2,6 +2,8 @@
 %html{:"xml:lang" => "en", :lang => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
   %head
     %meta{:content => "text/html; charset=utf-8", :"http-equiv" => "Content-Type"}
+    %link{:href => "http://fonts.googleapis.com/css?family=Old+Standard+TT", :rel => "stylesheet", :type => "text/css"}
+    %link{:rel=>"stylesheet", :href=>"/main.css", :type=>"text/css", :media=>"screen"}
     %title #{@page_title || "Welcome to Votes in Parliament"}
   %body
     = yield
