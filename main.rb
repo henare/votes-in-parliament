@@ -3,6 +3,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__) + '/lib'
 require 'rubygems'
 require 'sinatra'
 require 'haml'
+require 'json'
 require 'vip'
 
 # Set to true to get the XML files from the 'data'directory
@@ -28,7 +29,11 @@ get '/:date/?' do |@date|
                     :question => today.get_vote_question(i) }
   end
 
-  haml :day
+  if params[:format] == "json"
+    @divisions.to_json
+  else
+    haml :day
+  end
 end
 
 get '/:date/:division/?' do |@date, division|
