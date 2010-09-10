@@ -1,6 +1,6 @@
 %p Found #{@number_of_divisions} divisions today:
 %ul
   - @divisions.each do |d|
-    %li #{link_to(d[:time], '/' + d[:date] + '/' + d[:division])} - #{link_to("Division question:", d[:url])} #{d[:question]}
+    %li #{link_to(d[:time], '/' + d[:date] + '/' + d[:division_number])} - #{link_to("Division question:", d[:url])} #{d[:question]}
 %p
   Go back to the #{link_to("list of dates", "/")}.

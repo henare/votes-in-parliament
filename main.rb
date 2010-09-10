@@ -24,7 +24,7 @@ get '/:date/?' do |@date|
     i = i.to_s
     @divisions << { :date => @date,
                     :time => today.get_division_time(i),
-                    :division => i,
+                    :division_number => i,
                     :url => today.get_url(i),
                     :question => today.get_vote_question(i) }
   end
