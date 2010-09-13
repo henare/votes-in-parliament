@@ -2,19 +2,20 @@ require 'rubygems'
 require 'hpricot'
 require 'open-uri'
 
-def get_debate_list
+def get_debate_list(house)
   # TODO: Sort the list
   dates = Array.new
   if LOCAL_STORAGE
-    Dir['data/*.xml'].each do |f|
-      dates << '<li><a href="/' + f[5..14] + '">' + f[5..14] + "</a></li>\n"
+    Dir["data/#{house}_debates/*.xml"].each do |f|
+      puts f
+      dates << "<li><a href=\"/#{house}/" + f[-14..-5] + '">' + f[-14..-5] + "</a></li>\n"
     end
   else
-    url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
+    url = "http://data.openaustralia.org/scrapedxml/#{house}_debates/"
     doc = Hpricot.parse(open(url))
     doc.search("a").each do |a|
       if a.inner_text[-3..-1] == "xml"
-        dates << '<li><a href="/' + a.inner_text[0..9] + '">' + a.inner_text[0..9] + "</a></li>\n"
+        dates << "<li><a href=\"/#{house}/" + a.inner_text[0..9] + '">' + a.inner_text[0..9] + "</a></li>\n"
       end
     end
   end
@@ -23,11 +24,11 @@ end
 
 class Vip
 
-  def initialize(date)
+  def initialize(date, house)
     if LOCAL_STORAGE
-      @doc = Hpricot.parse(open("data/#{date}.xml"))
+      @doc = Hpricot.parse(open("data/#{house}_debates/#{date}.xml"))
     else
-      url = "http://data.openaustralia.org/scrapedxml/representatives_debates/"
+      url = "http://data.openaustralia.org/scrapedxml/#{house}_debates/"
       @doc = Hpricot.parse(open("#{url}#{date}.xml"))
     end
   end
@@ -38,10 +39,16 @@ class Vip
   end
 
   # Show me the OA URL for a debate
-  def get_url(vote)
+  def get_url(vote, house)
+    # IMPROVE: This doesn't feel right
+    if house == "representatives"
+      gid_house = "debate"
+    elsif house == "senate"
+      gid_house = "senate"
+    end
     vote = vote.to_i - 1
-    gid = (@doc/:division)[vote].previous.previous.attributes['id'][25..-1]
-    gid = "http://www.openaustralia.org/debate/?id=" + gid
+    gid = (@doc/:division)[vote].previous.previous.attributes['id'].split('/')[-1]
+    gid = "http://www.openaustralia.org/#{gid_house}/?id=" + gid
   end
 
   # What time did a division happen?

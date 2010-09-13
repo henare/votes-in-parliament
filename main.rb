@@ -11,12 +11,16 @@ require 'vip'
 LOCAL_STORAGE = false
 
 get '/' do
-  @dates = get_debate_list
   haml :index
 end
 
-get '/:date/?' do |@date|
-  today = Vip.new(@date)
+get '/:house/?' do |house|
+  @dates = get_debate_list(house)
+  haml :dates
+end
+
+get '/:house/:date/?' do |@house, @date|
+  today = Vip.new(@date, @house)
   @number_of_divisions = today.div_count
   @page_title = "Division summary for #{@date}"
   @divisions = Array.new
@@ -25,7 +29,7 @@ get '/:date/?' do |@date|
     @divisions << { :date => @date,
                     :time => today.get_division_time(i),
                     :division_number => i,
-                    :url => today.get_url(i),
+                    :url => today.get_url(i, @house),
                     :question => today.get_vote_question(i) }
   end
 
@@ -36,11 +40,11 @@ get '/:date/?' do |@date|
   end
 end
 
-get '/:date/:division/?' do |@date, division|
-  today = Vip.new(@date)
+get '/:house/:date/:division/?' do |@house, @date, division|
+  today = Vip.new(@date, @house)
 
   @division = division
-  @url = today.get_url(division)
+  @url = today.get_url(division, @house)
   @time = today.get_division_time(division)
   @page_title = "Votes for division number #{@division}, held at #{@time} for day #{@date}"
 

@@ -1,3 +1,6 @@
-%p Please select a date to search for divisions:
-%ul
-  = @dates
+#header
+  %p Which house would you like to search for divisions in?
+#left
+  %p= link_to('House of Representatives', '/representatives')
+#right
+  %p= link_to('Senate', '/senate')

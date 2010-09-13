@@ -7,11 +7,11 @@ body {
   width: 75%;
   margin: 0 auto;
 }
-#ayes {
+#left {
   float: left;
   width: 50%;
 }
-#noes {
+#right {
   float: right;
   width: 50%;
 }
