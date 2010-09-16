@@ -11,6 +11,7 @@ require 'vip'
 LOCAL_STORAGE = false
 
 get '/' do
+  # TODO: Only show the house(s) available
   haml :index
 end
 
@@ -34,6 +35,7 @@ get '/:house/:date/?' do |@house, @date|
   end
 
   if params[:format] == "json"
+    content_type :json
     @divisions.to_json
   else
     haml :day
@@ -42,23 +44,30 @@ end
 
 get '/:house/:date/:division/?' do |@house, @date, division|
   today = Vip.new(@date, @house)
+  @page_title = "Votes for division number #{division}, held at #{today.get_division_time(division)} for day #{@date}"
 
-  @division = division
-  @url = today.get_url(division, @house)
-  @time = today.get_division_time(division)
-  @page_title = "Votes for division number #{@division}, held at #{@time} for day #{@date}"
-
-  @ayes = Array.new
+  ayes = Array.new
   today.get_voters(division)['ayes'].each do |v|
-    @ayes << v
+    ayes << v
   end
 
-  @noes = Array.new
+  noes = Array.new
   today.get_voters(division)['noes'].each do |v|
-    @noes << v
+    noes << v
   end
 
-  haml :votes
+  @division = { :division_number => division,
+                :url => today.get_url(division, @house),
+                :time => today.get_division_time(division),
+                :ayes => ayes,
+                :noes => noes }
+
+  if params[:format] == "json"
+    content_type :json
+    @division.to_json
+  else
+    haml :votes
+  end
 end
 
 helpers do
