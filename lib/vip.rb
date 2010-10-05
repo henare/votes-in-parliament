@@ -62,6 +62,12 @@ class Vip
     (@doc/:division)[vote].previous.previous.inner_text
   end
 
+  # Get the speaker of the text immedately prior to the division
+  def get_vote_questioner(vote)
+    vote = vote.to_i - 1
+    (@doc/:division)[vote].previous.previous.attributes['speakername']
+  end
+
   # Gets all the voters for a division, returns a two arrays in a hash
   # of names of ayes and noes
   def get_voters(vote, house)

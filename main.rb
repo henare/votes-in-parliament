@@ -47,6 +47,8 @@ get '/:house/:date/:division/?' do |@house, @date, division|
   @page_title = "Votes for division number #{division}, held at #{today.get_division_time(division)} for day #{@date}"
 
   @division = { :division_number => division,
+                :question => today.get_vote_question(division),
+                :questioner => today.get_vote_questioner(division),
                 :url => today.get_url(division, @house),
                 :time => today.get_division_time(division),
                 :ayes => today.get_voters(division, @house)['ayes'],
