@@ -64,17 +64,31 @@ class Vip
 
   # Gets all the voters for a division, returns a two arrays in a hash
   # of names of ayes and noes
-  def get_voters(vote)
+  def get_voters(vote, house)
     vote = vote.to_i - 1
     aye = Array.new
     no = Array.new
     division = (@doc/:division)[vote]
+
+    # TODO: respect LOCAL_STORAGE
+    # Gets more detail about the voter by parsing more OA XML, such as party
+    if house == "senate"
+      uri = "http://data.openaustralia.org/members/senators.xml"
+    elsif house == "representatives"
+      uri = "http://data.openaustralia.org/members/representatives.xml"
+    end
+    members = Hpricot.parse(open(uri))
+
     (division/:memberlist).each do |l|
       (l/:member).each do |m|
         if m.attributes['vote'] == "aye"
-          aye << m.inner_text
+          aye << { :name => m.inner_text,
+                   :party => members.search("member[@id=#{m.attributes['id']}]").first[:party]
+                 }
         else
-          no << m.inner_text
+          no << { :name => m.inner_text,
+                   :party => members.search("member[@id=#{m.attributes['id']}]").first[:party]
+                 }
         end
       end
     end

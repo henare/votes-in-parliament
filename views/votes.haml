@@ -9,10 +9,10 @@
   %p Ayes: #{@division[:ayes].count}
   %ul
     - @division[:ayes].each do |a|
-      %li= a
+      %li= a[:party] + " - " + a[:name]
 
 #right
   %p Noes: #{@division[:noes].count}
   %ul
     - @division[:noes].each do |n|
-      %li= n
+      %li= n[:party] + " - " + n[:name]

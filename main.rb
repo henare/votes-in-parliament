@@ -49,8 +49,8 @@ get '/:house/:date/:division/?' do |@house, @date, division|
   @division = { :division_number => division,
                 :url => today.get_url(division, @house),
                 :time => today.get_division_time(division),
-                :ayes => today.get_voters(division)['ayes'],
-                :noes => today.get_voters(division)['noes'] }
+                :ayes => today.get_voters(division, @house)['ayes'],
+                :noes => today.get_voters(division, @house)['noes'] }
 
   if params[:format] == "json"
     content_type :json
