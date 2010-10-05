@@ -27,11 +27,14 @@ get '/:house/:date/?' do |@house, @date|
   @divisions = Array.new
   for i in (1..@number_of_divisions)
     i = i.to_s
+    questioner = today.get_vote_questioner(i)
+    questioner = "Division question" if questioner == ""
     @divisions << { :date => @date,
                     :time => today.get_division_time(i),
                     :division_number => i,
                     :url => today.get_url(i, @house),
-                    :question => today.get_vote_question(i) }
+                    :question => today.get_vote_question(i),
+                    :questioner => questioner }
   end
 
   if params[:format] == "json"

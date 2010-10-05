@@ -2,9 +2,12 @@
   %p The following are the votes for #{link_to("division number #{@division[:division_number]}", @division[:url])}, held at #{@division[:time]} for day #{@date}.
 
   %p
-    #{@division[:questioner]}, "
-    %em= @division[:question]
-    "
+    - if @division[:questioner] == ""
+      %em>= @division[:question]
+    - else
+      #{@division[:questioner]}, "
+      %em>= @division[:question]
+      "
 
   %p Go back to #{link_to("today's list of divsions", "/#{@house}/#{@date}")}.
 
