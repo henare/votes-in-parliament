@@ -70,12 +70,19 @@ class Vip
     no = Array.new
     division = (@doc/:division)[vote]
 
-    # TODO: respect LOCAL_STORAGE
     # Gets more detail about the voter by parsing more OA XML, such as party
-    if house == "senate"
-      uri = "http://data.openaustralia.org/members/senators.xml"
-    elsif house == "representatives"
-      uri = "http://data.openaustralia.org/members/representatives.xml"
+    if LOCAL_STORAGE
+      if house == "senate"
+        uri = "data/senators.xml"
+      elsif house == "representatives"
+        uri = "data/representatives.xml"
+      end
+    else
+      if house == "senate"
+        uri = "http://data.openaustralia.org/members/senators.xml"
+      elsif house == "representatives"
+        uri = "http://data.openaustralia.org/members/representatives.xml"
+      end
     end
     members = Hpricot.parse(open(uri))
 
