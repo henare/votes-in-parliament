@@ -46,21 +46,11 @@ get '/:house/:date/:division/?' do |@house, @date, division|
   today = Vip.new(@date, @house)
   @page_title = "Votes for division number #{division}, held at #{today.get_division_time(division)} for day #{@date}"
 
-  ayes = Array.new
-  today.get_voters(division)['ayes'].each do |v|
-    ayes << v
-  end
-
-  noes = Array.new
-  today.get_voters(division)['noes'].each do |v|
-    noes << v
-  end
-
   @division = { :division_number => division,
                 :url => today.get_url(division, @house),
                 :time => today.get_division_time(division),
-                :ayes => ayes,
-                :noes => noes }
+                :ayes => today.get_voters(division)['ayes'],
+                :noes => today.get_voters(division)['noes'] }
 
   if params[:format] == "json"
     content_type :json
