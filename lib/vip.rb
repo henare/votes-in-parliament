@@ -88,18 +88,31 @@ class Vip
 
     (division/:memberlist).each do |l|
       (l/:member).each do |m|
+        party = members.search("member[@id=#{m.attributes['id']}]").first[:party]
         if m.attributes['vote'] == "aye"
           aye << { :name => m.inner_text,
-                   :party => members.search("member[@id=#{m.attributes['id']}]").first[:party]
+                   :party => party,
+                   :party_logo => party_logo(party)
                  }
         else
           no << { :name => m.inner_text,
-                   :party => members.search("member[@id=#{m.attributes['id']}]").first[:party]
-                 }
+                  :party => party,
+                  :party_logo => party_logo(party)
+                }
         end
       end
     end
     votes = { 'ayes' => aye, 'noes' => no }
   end
 
+  private
+
+  def party_logo(party)
+    case party
+      when "Australian Labor Party" then "labor.gif"
+      when "Liberal Party" then "liberal.gif"
+      when "Australian Greens" then "greens.gif"
+      else "unknown.gif"
+    end
+  end
 end

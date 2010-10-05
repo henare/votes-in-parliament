@@ -9,10 +9,10 @@
   %p Ayes: #{@division[:ayes].count}
   %ul
     - @division[:ayes].each do |a|
-      %li= a[:party] + " - " + a[:name]
+      %li{ :style => "list-style-image: url(/images/#{a[:party_logo]});" }= a[:party] + " - " + a[:name]
 
 #right
   %p Noes: #{@division[:noes].count}
   %ul
     - @division[:noes].each do |n|
-      %li= n[:party] + " - " + n[:name]
+      %li{ :style => "list-style-image: url(/images/#{n[:party_logo]});" }= n[:party] + " - " + n[:name]
