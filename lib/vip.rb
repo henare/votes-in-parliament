@@ -89,13 +89,20 @@ class Vip
     (division/:memberlist).each do |l|
       (l/:member).each do |m|
         party = members.search("member[@id=#{m.attributes['id']}]").first[:party]
+        if house = "representatives"
+          url = "http://www.openaustralia.org/mp/?m=" + m.attributes['id'][25..-1]
+        elsif house == "senate"
+          url = "http://www.openaustralia.org/mp/?m=" + m.attributes['id'][23..-1]
+        end
         if m.attributes['vote'] == "aye"
           aye << { :name => m.inner_text,
-                   :party => party
+                   :party => party,
+                   :url => url
                  }
         else
           no << { :name => m.inner_text,
-                  :party => party
+                  :party => party,
+                  :url => url
                 }
         end
       end

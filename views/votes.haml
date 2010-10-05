@@ -9,10 +9,10 @@
   %p Ayes: #{@division[:ayes].count}
   %ul
     - @division[:ayes].each do |a|
-      %li{ :style => "list-style-image: url(/images/#{a[:party].downcase.gsub(' ', '_')}.gif);" }= a[:party] + " - " + a[:name]
+      %li{ :style => "list-style-image: url(/images/#{a[:party].downcase.gsub(' ', '_')}.gif);" }= a[:party] + " - " + link_to(a[:name], a[:url])
 
 #right
   %p Noes: #{@division[:noes].count}
   %ul
     - @division[:noes].each do |n|
-      %li{ :style => "list-style-image: url(/images/#{n[:party].downcase.gsub(' ', '_')}.gif);" }= n[:party] + " - " + n[:name]
+      %li{ :style => "list-style-image: url(/images/#{n[:party].downcase.gsub(' ', '_')}.gif);" }= n[:party] + " - " + link_to(n[:name], n[:url])
