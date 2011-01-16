@@ -19,7 +19,7 @@ Start me up:
 
 Then visit http://localhost:4567/2010-06-23/6 - which will show you the 6th division that happened on the 23rd of June, 2010 in the House of Representatives (no Senate support right now).
 
-Inspriation
+Inspiration
 -----------
 Inspired by the delightful ephemerality of Stephen Bartlett's [words-in-parliament](http://github.com/srbartlett/words-in-parliament).
 
